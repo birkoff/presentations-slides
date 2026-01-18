@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+
+				<section>
+					<h3>My Amazing Algorithm</h3>
+					<p>Here is how we solved the loop issue:</p>
+
+					<pre><code class="language-javascript" data-trim data-line-numbers="1-2|4-6">
+					function calculateData(input) {
+						let result = 0; // Initialize
+
+						// Loop through data
+						for (let i = 0; i < input.length; i++) {
+							result += input[i];
+						}
+
+						return result;
+					}
+					</code></pre>
+				</section>
+				<section>
+					<h2>reveal.js Math Plugin</h2>
+					<p>Render math with KaTeX, MathJax 2 or MathJax 3</p>
+				</section>
+
+				<section>
+					<h3>The Lorenz Equations</h3>
+
+					\[\begin{aligned}
+					\dot{x} &amp; = \sigma(y-x) \\
+					\dot{y} &amp; = \rho x - y - xz \\
+					\dot{z} &amp; = -\beta z + xy
+					\end{aligned} \]
+				</section>
+
+				<section>
+					<h3>The Cauchy-Schwarz Inequality</h3>
+
+					<script type="math/tex; mode=display">
+						\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
+					</script>
+				</section>
+
+				<section>Slide 2</section>
+
+
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
