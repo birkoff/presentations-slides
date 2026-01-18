@@ -1,7 +1,3 @@
-Here is the presentation formatted in Markdown. You can use this directly in tools like **Marp**, **Reveal.js**, or **Obsidian** to present.
-
----
-
 # Data State Management in Automated Testing
 
 ## The "Seeding as a Service" Pattern
@@ -20,7 +16,9 @@ Here is the presentation formatted in Markdown. You can use this directly in too
 * **The Risk:** Creates a "Dependency Chain." If an external service (Auth, Payments) fails, your unrelated test fails.
 * **The Fix:** **Decouple** test data setup from the application logic.
 
+
 ---
+
 
 ## Definitions: The What & The How
 
@@ -36,7 +34,9 @@ Here is the presentation formatted in Markdown. You can use this directly in too
 * **Example:** A script connecting to PostgreSQL to insert rows.
 * **Purpose:** Prepares the environment *before* test logic executes.
 
+
 ---
+
 
 ## Where is Seeding Critical?
 
@@ -52,6 +52,7 @@ Here is the presentation formatted in Markdown. You can use this directly in too
 
 
 *Note: Unit tests usually skip seeding in favor of Mocks.*
+
 
 ---
 
@@ -104,7 +105,9 @@ def lambda_handler(event, context):
 
 ```
 
+
 ---
+
 
 ## Implementation Part 2: The Client (Playwright)
 
@@ -130,10 +133,11 @@ export const test = base.extend<{ seedCatalog: SeededData }>({
     await request.post(ENDPOINT, { data: { action: 'delete', seed_id } });
   },
 });
-
 ```
 
+
 ---
+
 
 ## The Test Execution
 
