@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Advanced Workflow Syntax Workshop</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/monokai.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>CI/CD + Github Actions</title>
+
+    <link rel="stylesheet" href="../../dist/reset.css">
+    <link rel="stylesheet" href="../../dist/reveal.css">
+    <link rel="stylesheet" href="../../dist/theme/black.css">
+    <link rel="stylesheet" href="../../plugin/highlight/monokai.css">
     <style>
         .hljs-ln-numbers { -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; text-align: center; color: #ccc; border-right: 1px solid #CCC; vertical-align: top; padding-right: 5px; }
         .highlight-title { background: #ff5555; color: white; padding: 5px 20px; border-radius: 5px; display: inline-block; margin-bottom: 20px; }
@@ -17,10 +20,10 @@
 <div class="reveal">
     <div class="slides">
         <section>
-            <h1>Release Integration</h1>
-            <p>Analyzing a Dynamic Matrix Pipeline</p>
-            <div style="background: #444; padding: 10px; border-radius: 8px;">
-                <code>CI/CD + GitHub Actions Workshop</code>
+            <h1>CI/CD + Github Actions</h1>
+            <p>Branching Strategy and Release Process</p>
+            <div style="background: #444;font-size: medium; padding: 1px; border-radius: 8px;">
+                <code>Hector Reyes Aleman @ JunctionNet</code>
             </div>
         </section>
 
@@ -136,6 +139,7 @@ echo "apps=$APPS_JSON" >> $GITHUB_OUTPUT</code></pre>
             <p><small>By the end of this, you’ll build complex, dynamic pipelines.</small></p>
         </section>
 
+        
         <section>
             <section>
                 <h2>1. Expressions <code>${{ }}</code></h2>
@@ -285,13 +289,16 @@ if: ${{ runner.os == 'Linux' }}</code></pre>
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+<script src="../../dist/reveal.js"></script>
+<script src="../../plugin/notes/notes.js"></script>
+<script src="../../plugin/markdown/markdown.js"></script>
+<script src="../../plugin/highlight/highlight.js"></script>
 <script>
 	Reveal.initialize({
-		hash: true,
-		slideNumber: 'c/t',
-		plugins: [ RevealHighlight ]
+      hash: true,
+      slideNumber: 'c/t',
+      center: true,
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
 	});
 </script>
 </body>
