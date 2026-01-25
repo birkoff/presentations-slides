@@ -2,18 +2,29 @@
 
 This module explores the different ways to trigger GitHub Actions workflows.  You’ll learn how to respond to repository events, schedule workflows, filter runs, and manually dispatch workflows.
 
-## 1 — Workflow Triggers (`on:`)
+---
 
-Every workflow must specify at least one trigger under `on:`.  These are what start a workflow.  Examples of the most common triggers: 
+## Workflow Triggers (`on:`)
 
-- **push** — runs on pushes to the repo
+Every workflow must specify at least one trigger under `on:`.  These are what start a workflow.  
+vvv
+- **push** runs on pushes to the repo
+vvv
 - **pull_request** — runs on PR open/update/merge events
+vvv
 - **workflow_dispatch** — manual trigger button in the Actions tab
+
 - **schedule** — cron-based scheduling
+
 - **repository_dispatch** — external trigger via API
-- **workflow_call** — called by another workflow (reusable workflows)
+
+- -**workflow_call** — called by another workflow (reusable workflows)
+
 - **issues** - runs on issue events (open, close, comment, etc)
+
 - **issue_comment** - runs on issue comment events (create, edit, delete)
+
+---
 
 ### Examples
 
@@ -21,11 +32,15 @@ Every workflow must specify at least one trigger under `on:`.  These are what st
 on: push
 ```
 
+vvv
+
 ```yaml
 on:
   pull_request:
     branches: [ main ]
 ```
+
+vvv
 
 ```yaml
 on:
@@ -35,6 +50,9 @@ on:
 
 A full list of triggers and their options can be found in the [GitHub Actions documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows).
 
+--- 
+
+
 ## 2 — Filtering by Branches, Tags, and Paths
 
 Filtering can be used to limit when these triggers are applied.  Common use cases: 
@@ -43,6 +61,7 @@ Filtering can be used to limit when these triggers are applied.  Common use case
 * Only execute when changes are made that touch my source code.  Or in a monorepo, executing based on the portion of code that changed 
 * When a new release tag is applied, trigger a deployment
 
+---
 ### Branch filters
 
 ```yaml
@@ -52,7 +71,7 @@ on:
       - main
       - "release/*"
 ```
-
+vvv
 ### Path filters
 
 ```yaml
@@ -62,7 +81,7 @@ on:
       - "src/**"
       - "!docs/**"
 ```
-
+vvv
 ### Tag filters
 
 ```yaml
@@ -71,6 +90,8 @@ on:
     tags:
       - "v*.*.*"
 ```
+
+---
 
 ## 3 — Scheduled Workflows
 
@@ -82,7 +103,7 @@ on:
     - cron: "0 0 * * *" # daily at midnight UTC
 ```
 
-> 💡 Tip: Use GitHub Copilot to create your cron schedule.  Alternatively look at [crontab.guru](https://crontab.guru/) to help.
+---
 
 ## 4 — Manual Triggers
 
@@ -100,7 +121,7 @@ on:
         default: "staging"
 ```
 
-> Tip: `workflow_dispatch` is currently limited to 10 inputs with a max length of 255 characters each.  If you need more complex input, consider using a JSON string as an input and parsing it in your workflow.
+---
 
 
 ## 5 — External Triggers
@@ -123,6 +144,8 @@ jobs:
       - run: echo "Deployment triggered externally!"
 ```
 
+---
+
 Trigger with API:
 
 ```bash
@@ -133,9 +156,13 @@ curl -X POST \
   -d '{"event_type":"deploy"}'
 ```
 
+---
+
 ## 6 - Chaining Workflows
 
 Often you will want to break up your workflows into multiple stages where one job triggers another.  This can be done by using the `needs:` keyword within a workflow with multiple jobs.  However, you can also trigger one workflow from another using `workflow_run`.  This is useful if you want to separate concerns or have different teams own different workflows. 
+
+---
 
 **Example:**
 
@@ -213,6 +240,8 @@ In this lab we will walk through a few examples from the above triggers.
 * Chaining with workflow_run and workflow_dispatch
 * Triggering with repository_dispatch
 
+---
+
 ### 1 - Schedule and Manual Trigger
 
 Here we will create a workflow that runs on a schedule as well as manually.  This could be used for scheduled builds, nightly tests, or other periodic tasks.  In this example we will run every 5 minutes so that you can see it in action.  
@@ -245,6 +274,8 @@ Wait for a 5 minute interval to see it run automatically.  Once it has run, I su
 > Tip: While cron will run the jobs approximately at the scheduled time, it is not exact.  The job may start a few minutes later depending on system load, runner availability, and queue time.
 
 `workflow_dispatch` allows manually triggering the workflow.  We'll cover that in the next section.
+
+---
 
 ### 2 - Chaining Workflows
 
@@ -286,8 +317,7 @@ jobs:
 
 This is a typical workflow where code is built and tested on push or PR, and then deployed only after successful completion.  Typically this would be triggered on push or pull request, but for the sake of the lab we will use `workflow_dispatch` to manually trigger it.
 
-Go to the Actions tab in the repo, navigate to `Chaining - Build and Test`, and execute this by manually triggering this with the `Run workflow` button in the Actions tab.  Monitor that the job completes, then see that the `Chaining - Deploy` workflow runs automatically after.
-
+Go to the Actions tab in the repo, navigate to `Chaining - Build and Test`, and execute this by manually triggering this with the `Run workflow` button in the Actions tab.  Monitor that the job completes, then see that the `Chaining - Deploy` workflow runs automatically after.---
 ### 3 - External Trigger with repository_dispatch
 
 In this example we will create a workflow that is triggered externally using the `repository_dispatch` event.  This could be used to integrate with other systems or trigger workflows from scripts.

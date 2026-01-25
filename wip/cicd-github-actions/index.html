@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>CI/CD + Github Actions</title>
+
+    <link rel="stylesheet" href="../../dist/reset.css">
+    <link rel="stylesheet" href="../../dist/reveal.css">
+    <link rel="stylesheet" href="../../dist/theme/black.css">
+    <link rel="stylesheet" href="../../plugin/highlight/monokai.css">
+    <style>
+        .hljs-ln-numbers { -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; text-align: center; color: #ccc; border-right: 1px solid #CCC; vertical-align: top; padding-right: 5px; }
+        .highlight-title { background: #ff5555; color: white; padding: 5px 20px; border-radius: 5px; display: inline-block; margin-bottom: 20px; }
+        .lab-title { background: #50fa7b; color: black; padding: 5px 20px; border-radius: 5px; display: inline-block; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1>CI/CD + Github Actions</h1>
+            <p>Branching Strategies, Pipelines & The Release Process.</p>
+            <div style="background: #444;font-size: medium; padding: 1px; border-radius: 8px;">
+                <code>Hector Reyes Aleman @ JunctionNet</code>
+            </div>
+        </section>
+
+        <section data-markdown="cicd.md"
+                 data-separator="^\r?\n---\r?\n"
+                 data-separator-vertical="^\n\n"
+                 data-separator-notes="^Note:"
+                 data-charset="iso-8859-15">
+        </section>
+
+
+
+    </div>
+</div>
+
+<script src="../../dist/reveal.js"></script>
+<script src="../../plugin/notes/notes.js"></script>
+<script src="../../plugin/markdown/markdown.js"></script>
+<script src="../../plugin/highlight/highlight.js"></script>
+<script>
+	Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      center: true,
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+	});
+</script>
+</body>
+</html>

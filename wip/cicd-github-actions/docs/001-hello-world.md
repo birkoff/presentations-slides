@@ -4,7 +4,6 @@ GitHub Actions is a continuous integration and continuous deployment (CI/CD) pla
 
 GitHub Actions also supercharges DevOps by allowing you to run workflows triggered by a large number of different events in your repository. As an example, you can build a workflow which automatically adds the appropriate labels (e.g. "bug" or "triage") whenever someone creates a new issue in your repository.
 
-GitHub provides Linux, Windows, and macOS virtual machines to run your workflows, or you can host your own self-hosted runners in your own data center or cloud infrastructure.
 
 **The components of GitHub Actions**
 
@@ -16,17 +15,10 @@ You can read more about [GitHub Actions and workflows components](https://docs.g
 
 ## 1 - Implement your first workflow with GitHub Actions
 
-### 1.1 - Create a "Hello World" workflow
 
-Enough talking. Let's create our very first GitHub Actions workflow!
+ create a new file in your repository under `.github/workflows/main.yml`. Paste the following content into it:
 
-1. In your repository, click on the **Actions** tab. You will be offered a list of workflow suggestions. For your first workflow, however, you need to click the **set up a workflow yourself** link at the top of the page.
-
-  ![Screenshot depicting the initial actions tab](images/001/setup_new_workflow.png)
-
-2. This will automatically bring you to the GitHub Web GUI Action Editor, which prompts you to create a new file in your repository under `.github/workflows/main.yml`. Paste the following content into it:
-
-    ```yml
+```yml
     name: Hello World Training Workflow
 
     on:
@@ -38,16 +30,10 @@ Enough talking. Let's create our very first GitHub Actions workflow!
         steps:
           - name: Greet the User
             run: echo "Hello World!"
-    ```
-
-    ![Screenshot showing the Web GUI Editor, highlighting the Commit changes button](images/001/web_gui_editor.png)
-
-3. Rename the file to `hello.yml`, click **Start Commit** and commit it directly to the `main` branch (we won't tell anyone 🤫).
-
-    ![Screenshot showing the commit dialog](images/001/commit_changes.png)
+  ```
 
 
-### 1.2 - Run the workflow manually
+## 2 - Run the workflow manually
 
 The workflow you created is triggered by the `workflow_dispatch` event, meaning it can be manually executed:
 
@@ -57,25 +43,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 ```
-You can manually execute your workflow by navigating to the **Actions** tab, selecting your desired workflow, and clicking on the **Run workflow** button:
+can manually execute your workflow by navigating to the **Actions** tab, selecting your desired workflow, and clicking on the **Run workflow** button:
 
-<img width="1287" alt="image" src="https://user-images.githubusercontent.com/3329307/171651016-83f44a1c-471d-4b55-a71c-52b629f1bd5a.png">
 
-Refresh the page or wait a few seconds to see the results of your workflow run.
-
-<img width="1262" alt="image" src="https://user-images.githubusercontent.com/3329307/171655904-27e82818-8e23-4462-a024-6d443ee8241d.png">
-
-Congratulations, you have just run your first GitHub Actions workflow. 🥳
-
-> **About workflow triggers**
->
-> Your workflows are only triggered by the events you specify. For more information, see "[Configuring a workflow](https://docs.github.com/en/actions/using-workflows)" and "[Workflow syntax for GitHub Actions](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)". We will learn more about this shortly.
-
-## 1.3 - Analyze your workflow
-
-In the list of workflow runs, click on one of the runs for the "Hello World" workflow. You will be shown its single job (`greet`) under "Jobs" on the left side of the page. Click on that job to view its logs (you can expand the logs for a particular step by clicking on it).
-
-The workflow run view also allows you to re-run jobs in case problems occurred (button on the top right). Additionally, re-running a job allows you to enable [debug logging](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging).
 
 ## 2 - Use an action
 
