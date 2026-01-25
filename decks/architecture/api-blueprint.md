@@ -173,7 +173,7 @@ class EventsManagerService:
 
 ---
 
-# 4. Engineering Team Action Items
+# 4. Key Takeaways
 
 
 
