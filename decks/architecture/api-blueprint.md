@@ -1,4 +1,5 @@
-### 1. The API Handler
+# 1. The API Handler
+
 
 
 Import aws_lambda_powertools utilities
@@ -14,6 +15,7 @@ from aws_lambda_powertools.utilities.typing import LambdaContext
 ```
 
 
+
 Import Shared Middlewares and Env Vars
 ```python
 # Shared Middlewares
@@ -26,6 +28,7 @@ from src.common.shared.middlewares.organization import (
 # CORS_ALLOW_ORIGIN = os.getenv('CORS_ALLOW_ORIGIN', None) Force specific CORS_ALLOW_ORIGIN
 from src.env_vars import LOG_EVENT, CORS_ALLOW_ORIGIN
 ```
+
 
 
 Repository specific Dependency Injection, App Initialization and Middleware Factory
@@ -51,6 +54,7 @@ app.use(middlewares=[
 ```
 
 
+
 API Endpoint uses the injected service(s) into the app context
 ```python
 @app.post("/events")
@@ -63,8 +67,8 @@ def publish():
     return Response(
         status_code=HTTPStatus.OK.value, content_type="application/json",
         body=response)
-
 ```
+
 
 
 Lambda Handler Entry Point
@@ -76,39 +80,45 @@ def lambda_handler(event: dict, context: LambdaContext):
     Middleware is automatically applied to all routes.
     """
     return app.resolve(event, context)
-
 ```
 
 ---
 
-## 2. Service Dependency Injection Middleware
+# 2. Service Dependency Injection Middleware
+
 
 
 This layer performs **Dependency Injection** before the handler is even called. but with the Organization User Context already injected by a previous middleware.
 
-```python [7-12]
+```python
 # middlewares.py`
+from aws_lambda_powertools.event_handler import APIGatewayRestResolver, Response
+from aws_lambda_powertools.event_handler.middlewares import NextMiddleware
+
+## Import required ServiceFactories
 from src.events_management.application.factories import ServiceFactory
 
-def inject_app_services(app, next_middleware):
+def inject_app_services(app: APIGatewayRestResolver, next_middleware: NextMiddleware) -> Response:
     # 1. Grab identity context from previous middleware
     context = app.context.get('organization_user_context')
 
     # 2. Use Factory to create a ready-to-use service
     service = ServiceFactory.create_events_manager_service(context=context)
-    
+
     # 3. Inject it into the app context for the handler
     app.append_context(services={'events_manager_service': service})
+
+    # Repeat to inject all required services
 
     return next_middleware(app)
 
 ```
 
 
-### Service Factory
 
+### Service Factory
 Service Factory Initializes Services with Organization User Contextr, so organization setters won't be necesary.
-```python [1-6]
+```python
 ### `factories.py`
 
 class ServiceFactory:
@@ -129,7 +139,9 @@ class ServiceFactory:
 
 ---
 
-## 3. The Application Service
+# 3. The Application Service
+
+
 
 ```python
 from src.common.shared.infrastructure.events_bus.eventbrigde_bus import EventBridge
@@ -152,4 +164,50 @@ class EventsManagerService:
 
     def get_context(self):
         return self.context
+```
+
+---
+
+# 4. Engineering Team Action Items
+
+
+
+
+1. Make sure you are implementing Service Dependency Injection with the Organization User Context already injected by a previous middleware.
+```python
+# middlewares.py`
+from aws_lambda_powertools.event_handler import APIGatewayRestResolver, Response
+from aws_lambda_powertools.event_handler.middlewares import NextMiddleware
+
+## Import required ServiceFactories
+from src.events_management.application.factories import ServiceFactory
+
+def inject_app_services(app: APIGatewayRestResolver, next_middleware: NextMiddleware) -> Response:
+    # 1. Grab identity context from previous middleware
+    context = app.context.get('organization_user_context')
+
+    # 2. Use Factory to create a ready-to-use service
+    service = ServiceFactory.create_events_manager_service(context=context)
+
+    # 3. Inject it into the app context for the handler
+    app.append_context(services={'events_manager_service': service})
+
+    # Repeat to inject all required services
+
+    return next_middleware(app)
+```
+
+
+
+2. Makse sure your Application Service constructor implement context: OrganizationUserContext and event_bus: EventBridge
+```python
+    from src.common.shared.infrastructure.events_bus.eventbrigde_bus import EventBridge
+    from src.common.shared.schemas.organization_user_context import OrganizationUserContext
+    .
+    # This Example is missing the database and repository dependencies 
+    # They are not relevant for this Action Item (So they are ommited for simplicity)
+    .
+    def __init__(self, event_bus: EventBridge, context: OrganizationUserContext):
+        self.event_bus = event_bus
+        self.context = context
 ```
